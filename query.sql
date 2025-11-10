@@ -1,10 +1,10 @@
--- 1. Phim còn đang chiếu
+-- 1. Phim còn đang chiếu (điều kiện đơn giản trên 1 bảng Movie)
 SELECT MovieId, MovieName, Duration, ReleaseDate, CloseDate
 FROM Movie
 WHERE CloseDate >= CAST(GETDATE() AS DATE);
 GO
 
--- 2. Phim thỏa nhiều điều kiện
+-- 2. Phim thỏa nhiều điều kiện (nhiều điều kiện trên 1 bảng Movie)
 SELECT MovieId, MovieName, Duration, ReleaseDate, CloseDate
 FROM Movie
 WHERE Duration BETWEEN 90 AND 150
@@ -12,19 +12,19 @@ WHERE Duration BETWEEN 90 AND 150
   AND CloseDate > ReleaseDate;
 GO
 
--- 3. Top 10 phim mới nhất
+-- 3. Top 10 phim mới nhất (sắp xếp trên 1 bảng Movie)
 SELECT TOP 10 MovieId, MovieName, ReleaseDate, Duration
 FROM Movie
 ORDER BY ReleaseDate DESC, Duration DESC;
 GO
 
--- 4. Liệt kê phim và thể loại
+-- 4. Liệt kê phim và thể loại (INNER JOIN 2 bảng Movie + Genre)
 SELECT m.MovieId, m.MovieName, g.GenreName
 FROM Movie m
 JOIN Genre g ON m.GenreID = g.GenreID;
 GO
 
--- 5. Số vé bán theo suất
+-- 5. Số vé bán theo suất (LEFT JOIN 2 bảng Show + Ticket)
 SELECT s.ShowID, s.ShowDate, s.ShowTime, COUNT(t.TicketID) AS TicketsSold
 FROM Show s
 LEFT JOIN Ticket t ON s.ShowID = t.ShowID
@@ -32,15 +32,15 @@ GROUP BY s.ShowID, s.ShowDate, s.ShowTime
 ORDER BY s.ShowDate DESC, s.ShowTime DESC;
 GO
 
--- 6. Hợp danh sách tên
-SELECT GenreName AS Name, 'Genre' AS Source
+-- 6. Hợp danh sách tên (UNION 2 bảng Genre + SeatType)
+SELECT GenreName AS Name, N'Genre' AS Source
 FROM Genre
 UNION
-SELECT TypeName AS Name, 'SeatType' AS Source
+SELECT TypeName AS Name, N'SeatType' AS Source
 FROM SeatType;
 GO
 
--- 7. Khách hàng có đánh giá
+-- 7. Khách hàng có đánh giá (INTERSECT Customer + Review)
 SELECT CustomerID
 FROM Customer
 WHERE Email IS NOT NULL
@@ -49,7 +49,7 @@ SELECT CustomerID
 FROM Review;
 GO
 
--- 8. Khách hàng chưa từng đặt đơn
+-- 8. Khách hàng chưa từng đặt đơn (EXCEPT Customer + Order)
 SELECT CustomerID, Fullname
 FROM Customer
 EXCEPT
@@ -58,7 +58,7 @@ FROM Customer c
 JOIN [Order] o ON c.CustomerID = o.CustomerID;
 GO
 
--- 9. Lịch sử đặt vé chi tiết khách hàng
+-- 9. Lịch sử đặt vé chi tiết khách hàng (Customer + Order + Ticket + Show + Movie + Hall + Payment)
 DECLARE @CustomerID INT = 1;
 SELECT c.CustomerID, c.Fullname, o.OrderID, o.OrderTime,
        m.MovieName, s.ShowDate, s.ShowTime, h.Name AS HallName,
@@ -74,7 +74,7 @@ WHERE c.CustomerID = @CustomerID
 ORDER BY o.OrderTime DESC;
 GO
 
--- 10. Top 10 phim doanh thu + đánh giá
+-- 10. Top 10 phim doanh thu + đánh giá (Movie + Genre + Show + Ticket + Review)
 SELECT TOP 10 m.MovieId, m.MovieName, g.GenreName,
        COUNT(DISTINCT s.ShowID) AS TotalShows,
        COUNT(t.TicketID) AS TicketsSold,
@@ -90,7 +90,7 @@ GROUP BY m.MovieId, m.MovieName, g.GenreName
 ORDER BY Revenue DESC, AvgRating DESC;
 GO
 
--- 11. Doanh thu theo phương thức thanh toán
+-- 11. Doanh thu theo phương thức thanh toán (Payment + Order + Ticket + EWalletPayment + CashPayment + CreditCardPayment)
 SELECT CASE
            WHEN ew.PaymentID IS NOT NULL THEN N'Ví điện tử'
            WHEN cp.PaymentID IS NOT NULL THEN N'Tiền mặt'
@@ -114,7 +114,7 @@ GROUP BY CASE
 ORDER BY Revenue DESC;
 GO
 
--- 12. Tỷ lệ lấp đầy phòng chiếu
+-- 12. Tỷ lệ lấp đầy phòng chiếu (Hall + Show + Ticket)
 SELECT h.HallID, h.Name AS HallName,
        COUNT(DISTINCT s.ShowID) AS TotalShows,
        (h.RowNumber * h.ColumnNumber) AS SeatsPerShow,
@@ -130,7 +130,7 @@ GROUP BY h.HallID, h.Name, h.RowNumber, h.ColumnNumber
 ORDER BY OccupancyRate DESC;
 GO
 
--- 13. Top khách hàng chi tiêu
+-- 13. Top khách hàng chi tiêu (Customer + Order + Ticket + Payment)
 SELECT TOP 10 c.CustomerID, c.Fullname, c.Email, c.Phone,
        COUNT(DISTINCT o.OrderID) AS TotalOrders,
        COUNT(t.TicketID) AS TotalTickets,
@@ -144,7 +144,7 @@ GROUP BY c.CustomerID, c.Fullname, c.Email, c.Phone
 ORDER BY TotalSpent DESC;
 GO
 
--- 14. Doanh thu theo nhóm tuổi
+-- 14. Doanh thu theo nhóm tuổi (Customer + Order + Ticket + Payment)
 SELECT CASE
            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) < 18 THEN N'Dưới 18'
            WHEN DATEDIFF(YEAR, c.DOB, GETDATE()) BETWEEN 18 AND 25 THEN N'18-25'
@@ -169,7 +169,7 @@ GROUP BY CASE
 ORDER BY Revenue DESC;
 GO
 
--- 15. Trạng thái ghế một suất chiếu
+-- 15. Trạng thái ghế một suất chiếu (Seat + SeatType + Ticket + Show + Hall + Movie)
 DECLARE @ShowID INT = 1;
 SELECT seat.Position,
        st.TypeName,
