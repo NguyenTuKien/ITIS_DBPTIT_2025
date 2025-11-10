@@ -1,5 +1,4 @@
-CREATE
-DATABASE TicketBooth;
+CREATE DATABASE TicketBooth;
 GO
 
 USE TicketBooth;

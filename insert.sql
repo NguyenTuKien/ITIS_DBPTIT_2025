@@ -11,7 +11,11 @@ VALUES (N'Nguyễn Văn An', N'Nam', '0901234567', 'nguyenvanan@gmail.com', '199
        (N'Phan Văn Inh', N'Nam', '0909012345', 'phanvaninh@gmail.com', '1987-01-14'),
        (N'Lý Thị Kim', N'Nữ', '0910123456', 'lythikim@gmail.com', '1996-06-05'),
        (N'Trương Văn Long', N'Nam', '0911234567', 'truongvanlong@gmail.com', '1990-10-12'),
-       (N'Ngô Thị Mai', N'Nữ', '0912345678', 'ngothimai@gmail.com', '1993-02-28');
+       (N'Ngô Thị Mai', N'Nữ', '0912345678', 'ngothimai@gmail.com', '1993-02-28'),
+       (N'Nguyễn Thị Oanh', N'Nữ', '0923456789', 'nguyenthioanh@example.com', '2004-09-15'),
+       (N'Nguyễn Văn Phú', N'Nam', '0930000001', 'nguyenvanphu@example.com', '1997-03-12'),
+       (N'Trần Thị Quyên', N'Nữ', '0930000002', 'tranthiquyen@example.com', '2001-11-30'),
+       (N'Lâm Hữu Trí', N'Nam', '0930000003', 'lamhuutri@example.com', '1985-04-22');
 GO
 
 
@@ -45,7 +49,10 @@ INSERT INTO Movie (MovieName, Description, Duration, ReleaseDate, CloseDate, Tra
     (N'Mai', N'Phim tâm lý về một người phụ nữ tìm lại chính mình', 131, '2024-02-25', '2024-04-25', '/trailers/mai.mp4', '/posters/mai.jpg', 8),
     (N'Dune: Part Two', N'Hành trình của Paul Atreides tiếp tục trên hành tinh sa mạc', 166, '2024-03-01', '2024-05-01', '/trailers/dune.mp4', '/posters/dune.jpg', 5),
     (N'Oppenheimer', N'Câu chuyện về người cha của bom nguyên tử', 180, '2024-01-10', '2024-03-10', '/trailers/oppenheimer.mp4', '/posters/oppenheimer.jpg', 10),
-    (N'Barbie', N'Barbie rời Barbieland để khám phá thế giới thực', 114, '2024-02-05', '2024-04-05', '/trailers/barbie.mp4', '/posters/barbie.jpg', 2);
+    (N'Barbie', N'Barbie rời Barbieland để khám phá thế giới thực', 114, '2024-02-05', '2024-04-05', '/trailers/barbie.mp4', '/posters/barbie.jpg', 2),
+    (N'Những Mảnh Ghép Cảm Xúc 2', N'Hành trình cảm xúc mới của Riley bước vào tuổi trưởng thành.', 105, '2025-06-15', '2026-01-15', '/trailers/insideout2.mp4', '/posters/insideout2.jpg', 7),
+    (N'Biệt Đội Báo Thù: Hồi Kết Mới', N'Các siêu anh hùng đối mặt mối đe doạ xuyên thời gian.', 140, '2025-08-01', '2026-02-01', '/trailers/avengers_new.mp4', '/posters/avengers_new.jpg', 1),
+    (N'Hành Tinh Xanh 3', N'Cuộc phiêu lưu khám phá đại dương và rừng sâu.', 120, '2025-10-05', '2026-04-05', '/trailers/blueplanet3.mp4', '/posters/blueplanet3.jpg', 9);
 GO
 
 
@@ -155,6 +162,7 @@ GO
 INSERT INTO Ticket (OrderID, ShowID, HallID, Position, Price) VALUES
     (1, 1, 1, 'A1', 150000.00),
     (1, 1, 1, 'A2', 150000.00),
+    (1, 1, 1, 'A3', 150000.00),
     (2, 2, 2, 'C1', 120000.00),
     (3, 3, 3, 'D1', 100000.00),
     (4, 4, 4, 'E1', 130000.00),

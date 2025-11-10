@@ -32,12 +32,19 @@ GROUP BY s.ShowID, s.ShowDate, s.ShowTime
 ORDER BY s.ShowDate DESC, s.ShowTime DESC;
 GO
 
--- 6. Hợp danh sách tên
-SELECT GenreName AS Name, N'Genre' AS Source
-FROM Genre
+-- 6. Phân loại trạng thái phim
+SELECT MovieId, MovieName, ReleaseDate, CloseDate, N'Đang chiếu' AS TrangThai
+FROM Movie
+WHERE CAST(GETDATE() AS DATE) BETWEEN ReleaseDate AND CloseDate
 UNION
-SELECT TypeName AS Name, N'SeatType' AS Source
-FROM SeatType;
+SELECT MovieId, MovieName, ReleaseDate, CloseDate, N'Sắp chiếu'
+FROM Movie
+WHERE ReleaseDate > CAST(GETDATE() AS DATE)
+UNION
+SELECT MovieId, MovieName, ReleaseDate, CloseDate, N'Đã kết thúc'
+FROM Movie
+WHERE CloseDate < CAST(GETDATE() AS DATE)
+ORDER BY ReleaseDate DESC;
 GO
 
 -- 7. Khách hàng có đánh giá
@@ -49,8 +56,8 @@ SELECT CustomerID
 FROM Review;
 GO
 
--- 8. Khách hàng chưa từng đặt đơn
-SELECT CustomerID, Fullname
+-- 8. Khách hàng chưa từng đặt vé
+SELECT CustomerID, Email
 FROM Customer
 EXCEPT
 SELECT c.CustomerID, c.Fullname
