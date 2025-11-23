@@ -1,0 +1,1 @@
+select * from instructor where started_on < '1990-01-01'

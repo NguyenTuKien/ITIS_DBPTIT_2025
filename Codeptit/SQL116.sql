@@ -1,0 +1,1 @@
+select * from instructor where year(started_on) >= (year(NOW()) - 20);

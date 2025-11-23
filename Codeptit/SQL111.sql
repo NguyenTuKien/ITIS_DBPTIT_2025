@@ -1,0 +1,1 @@
+select * from class where lower(title) like lower('%Introduction%')

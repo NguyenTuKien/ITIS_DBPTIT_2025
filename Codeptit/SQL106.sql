@@ -1,0 +1,1 @@
+Select fname from instructor where username = 'zahorjan'

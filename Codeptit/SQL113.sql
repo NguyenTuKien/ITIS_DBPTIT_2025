@@ -1,0 +1,1 @@
+select dept, number, SUBSTRING(title, 1, 12) as short_title from class;

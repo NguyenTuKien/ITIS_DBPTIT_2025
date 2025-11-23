@@ -1,0 +1,1 @@
+select title, Length(title) as LENGTH from class

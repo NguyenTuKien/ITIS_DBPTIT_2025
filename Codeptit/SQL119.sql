@@ -1,0 +1,4 @@
+ALTER TABLE Employees
+MODIFY COLUMN employee_id INT,
+MODIFY COLUMN hire_date DATE,
+MODIFY COLUMN salary DECIMAL(10, 2);

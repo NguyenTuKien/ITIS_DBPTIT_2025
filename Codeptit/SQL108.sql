@@ -1,0 +1,1 @@
+select * from teaches where username = 'djw' or username = 'levy'
