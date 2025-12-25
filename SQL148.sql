@@ -1,0 +1,2 @@
+SELECT MAHANG as MaHang, TENHANG as TenHang, SOLUONG as SoLuong
+FROM MATHANG;
